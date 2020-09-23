@@ -19,7 +19,7 @@ ENTRADA, SAIDA, TEMPO = readMat()
 TEMPO_AMOSTRAGEM = TEMPO[0][1]
 
 # Calculando intervalo de tempo
-TEMPO_AUX = arange(0,300,TEMPO_AMOSTRAGEM)
+TEMPO_AUX = arange(0,200,TEMPO_AMOSTRAGEM)
 
 # Calculando coeficientes
 COEFICIENTE_A1, COEFICIENTE_B1 = calculate()

@@ -1,6 +1,7 @@
 import modules.data.constants as const
 from abc import ABC, abstractmethod
 import control as con
+from modules.controlers.utils import calculateOvershoot, accommodationPoint
 
 class Malha(ABC):
 
@@ -11,12 +12,14 @@ class Malha(ABC):
 
         self.PV = const.PV
         self.SP = const.SP
+        # self.tempo = const.TEMPO_AUX
         self.tempo = const.TEMPO[0]
-
 
         self.resposta = []
         self.legenda = legend
         self.overshoot = 0
+        self.tempo_acomodacao = 0
+        self.valor_acomodacao = 0
     
     @abstractmethod
     def execute(self):
@@ -39,13 +42,12 @@ class Aberta(Malha):
             # Calculando um novo valor para o PV
             self.PV = self.a1*self.PV + self.b1*self.SP
 
-        maiorValor = max(self.resposta, key=float)
+        # Calcular overshoot
+        self.overshoot = calculateOvershoot(self.resposta, self.SP)
 
-        if self.SP < maiorValor:
-            self.overshoot = f'Overshoot: {round((maiorValor - self.SP) * 100, 2)}%'
-        else:
-            self.overshoot = 'Sem overshoot'
-
+        # Calcular ponto de acomodação
+        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
+        
 
 class Fechada(Malha):
 
@@ -69,12 +71,11 @@ class Fechada(Malha):
             # Calculando um novo valor para o PV
             self.PV = self.a1*self.PV + self.b1*erro
 
-        maiorValor = max(self.resposta, key=float)
+        # Calcular overshoot
+        self.overshoot = calculateOvershoot(self.resposta, self.SP)
 
-        if self.SP < maiorValor:
-            self.overshoot = f'Overshoot: {round((maiorValor - self.SP) * 100, 2)}%'
-        else:
-            self.overshoot = 'Sem overshoot'
+        # Calcular ponto de acomodação
+        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
 
 
 class FechadaComGanho(Malha):
@@ -100,12 +101,11 @@ class FechadaComGanho(Malha):
             # Calculando um novo valor para o PV
             self.PV = self.a1*self.PV + self.b1*erro
 
-        maiorValor = max(self.resposta, key=float)
+        # Calcular overshoot
+        self.overshoot = calculateOvershoot(self.resposta, self.SP)
 
-        if self.SP < maiorValor:
-            self.overshoot = f'Overshoot: {round((maiorValor - self.SP) * 100, 2)}%'
-        else:
-            self.overshoot = 'Sem overshoot'
+        # Calcular ponto de acomodação
+        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
 
 class FechadaComGanhoIntegral(Malha):
 
@@ -144,12 +144,11 @@ class FechadaComGanhoIntegral(Malha):
             # Calculando um novo valor para o PV
             self.PV = self.a1*self.PV + self.b1*controlador
 
-        maiorValor = max(self.resposta, key=float)
+        # Calcular overshoot
+        self.overshoot = calculateOvershoot(self.resposta, self.SP)
 
-        if self.SP < maiorValor:
-            self.overshoot = f'Overshoot: {round((maiorValor - self.SP) * 100, 2)}%'
-        else:
-            self.overshoot = 'Sem overshoot'
+        # Calcular ponto de acomodação
+        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
 
 
 class FechadaComGanhoIntegralDerivativo(Malha):
@@ -200,9 +199,8 @@ class FechadaComGanhoIntegralDerivativo(Malha):
             # Calculando um novo valor para o PV
             self.PV = self.a1*self.PV + self.b1*controlador
 
-        maiorValor = max(self.resposta, key=float)
+        # Calcular overshoot
+        self.overshoot = calculateOvershoot(self.resposta, self.SP)
 
-        if self.SP < maiorValor:
-            self.overshoot = f'Overshoot: {round((maiorValor - self.SP) * 100, 2)}%'
-        else:
-            self.overshoot = 'Sem overshoot'
+        # Calcular ponto de acomodação
+        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
