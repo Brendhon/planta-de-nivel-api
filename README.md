@@ -1,4 +1,4 @@
-# ProjetoC213
+# Projeto C213
 Porjeto realizado para colocar em prática os conhecimentos adquiridos na diciplina de **C213** (Sistemas Embarcados) durante a graduação em Engenharia de Computação pelo [Inatel](https://inatel.br/home/).
 
 ## Conteúdos estudados:
