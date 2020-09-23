@@ -6,15 +6,8 @@ def saveMalha(malha):
     pyplot.plot(malha.resposta, label=f'{malha.legenda}')
     pyplot.legend()
 
-    # Plotanto o ponto de acomodação
-    if malha.tempo_acomodacao != 0:
-        pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c='black', alpha = 0.8)
-        pyplot.annotate(f'x = {malha.tempo_acomodacao}\ny = {malha.valor_acomodacao}', (malha.tempo_acomodacao, malha.valor_acomodacao))
-        text = f'{malha.overshoot}\nValor de acomodação: {malha.valor_acomodacao}\nTempo de acomodação: {malha.tempo_acomodacao}s'
-    else:
-        text = f'{malha.overshoot}'
-        
     # Mostrando os dados e a grade
+    text = f'Overshoot: {malha.overshoot}%'
     pyplot.text(0.5, 0.3, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
     pyplot.grid(True)
@@ -29,11 +22,6 @@ def saveMalhas(arrayMalha):
         pyplot.plot(malha.resposta, label=f'{malha.legenda}')
         pyplot.legend()    
 
-        # Plotanto o ponto de acomodação
-        if malha.tempo_acomodacao != 0:
-            pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c='black', alpha = 0.8)
-            pyplot.annotate(f'x = {malha.tempo_acomodacao}\ny = {malha.valor_acomodacao}', (malha.tempo_acomodacao, malha.valor_acomodacao))
-
     # Salvando todas as malhas passadas
     pyplot.grid(True)
     pyplot.savefig('img/malhas.png')
@@ -44,15 +32,8 @@ def plotMalha(malha):
     pyplot.plot(malha.resposta, label=f'{malha.legenda}')
     pyplot.legend()
 
-    # Plotanto o ponto de acomodação
-    if malha.tempo_acomodacao != 0:
-        pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c='black', alpha = 0.8)
-        pyplot.annotate(f'x = {malha.tempo_acomodacao}\ny = {malha.valor_acomodacao}', (malha.tempo_acomodacao, malha.valor_acomodacao))
-        text = f'{malha.overshoot}\nValor de acomodação: {malha.valor_acomodacao}\nTempo de acomodação: {malha.tempo_acomodacao}s'
-    else:
-        text = f'{malha.overshoot}'
-
     # Mostrando os dados e a grade
+    text = f'Overshoot: {malha.overshoot}%'
     pyplot.text(0.5, 0.3, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
     pyplot.grid(True)
@@ -68,11 +49,6 @@ def plotMalhas(arrayMalha):
         pyplot.plot(malha.resposta, label=f'{malha.legenda}')
         pyplot.legend()
 
-        # Plotanto o ponto de acomodação
-        if malha.tempo_acomodacao != 0:
-            pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c='black', alpha = 0.8)
-            pyplot.annotate(f'x = {malha.tempo_acomodacao}\ny = {malha.valor_acomodacao}', (malha.tempo_acomodacao, malha.valor_acomodacao))
-
     # Mostrando todas as malhas passadas
     pyplot.grid(True)
     pyplot.show()
@@ -83,15 +59,8 @@ def plotAndSaveMalha(malha):
     pyplot.plot(malha.resposta, label=f'{malha.legenda}')
     pyplot.legend()
 
-    # Plotanto o ponto de acomodação
-    if malha.tempo_acomodacao != 0:
-        pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c='black', alpha = 0.8)
-        pyplot.annotate(f'x = {malha.tempo_acomodacao}\ny = {malha.valor_acomodacao}', (malha.tempo_acomodacao, malha.valor_acomodacao))
-        text = f'{malha.overshoot}\nValor de acomodação: {malha.valor_acomodacao}\nTempo de acomodação: {malha.tempo_acomodacao}s'
-    else:
-        text = f'{malha.overshoot}'
-
     # Mostrando os dados e a grade
+    text = f'Overshoot: {malha.overshoot}%'
     pyplot.text(0.5, 0.3, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
     pyplot.grid(True)
@@ -107,11 +76,6 @@ def plotAndSaveMalhas(arrayMalha):
     for malha in arrayMalha:
         pyplot.plot(malha.resposta, label=f'{malha.legenda}')
         pyplot.legend()
-
-        # Plotanto o ponto de acomodação
-        if malha.tempo_acomodacao != 0:
-            pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c='black', alpha = 0.8)
-            pyplot.annotate(f'x = {malha.tempo_acomodacao}\ny = {malha.valor_acomodacao}', (malha.tempo_acomodacao, malha.valor_acomodacao))
 
     # Mostrando todas as malhas passadas
     pyplot.grid(True)

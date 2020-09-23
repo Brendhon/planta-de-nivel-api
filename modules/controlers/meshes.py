@@ -1,7 +1,7 @@
 import modules.data.constants as const
 from abc import ABC, abstractmethod
 import control as con
-from modules.controlers.utils import calculateOvershoot, accommodationPoint
+from modules.controlers.utils import calculateOvershoot
 
 class Malha(ABC):
 
@@ -12,15 +12,13 @@ class Malha(ABC):
 
         self.PV = const.PV
         self.SP = const.SP
-        self.tempo = const.TEMPO_AUX
-        # self.tempo = const.TEMPO[0]
+        self.tempo = const.TEMPO[0]
+        # self.tempo = const.TEMPO_PLOTAGEM
 
         self.resposta = []
         self.legenda = legend
         self.overshoot = 0
-        self.tempo_acomodacao = 0
-        self.valor_acomodacao = 0
-    
+        
     @abstractmethod
     def execute(self):
         pass
@@ -43,11 +41,7 @@ class Original(Malha):
         # "Alterando" amplitude do degrau
         self.resposta = yout*self.valorEntrada
 
-        self.overshoot = 'Sem overshoot'
-
-        # Calcular ponto de acomodação
-        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.resposta[len(self.resposta)-1], self.overshoot)
-            
+        self.overshoot = con.step_info(sys)['Overshoot']
         
 class Aberta(Malha):
 
@@ -67,9 +61,6 @@ class Aberta(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
-
-        # Calcular ponto de acomodação
-        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
         
 class Fechada(Malha):
 
@@ -95,9 +86,6 @@ class Fechada(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
-
-        # Calcular ponto de acomodação
-        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
 
 
 class FechadaComGanho(Malha):
@@ -125,9 +113,6 @@ class FechadaComGanho(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
-
-        # Calcular ponto de acomodação
-        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
 
 class FechadaComGanhoIntegral(Malha):
 
@@ -168,9 +153,6 @@ class FechadaComGanhoIntegral(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
-
-        # Calcular ponto de acomodação
-        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
 
 
 class FechadaComGanhoIntegralDerivativo(Malha):
@@ -223,6 +205,3 @@ class FechadaComGanhoIntegralDerivativo(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
-
-        # Calcular ponto de acomodação
-        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)

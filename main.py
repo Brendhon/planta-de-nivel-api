@@ -1,6 +1,5 @@
 import modules.controlers.meshes as malha
 import modules.plots.plot as plt
-import modules.data.constants as const
 
 def main():
     
@@ -20,23 +19,19 @@ def main():
     FechadaComGanho = malha.FechadaComGanho()  # Instanciando classe
     FechadaComGanho.execute() # Executando as operações baseadas nas esquações a diferenças
 
-    # Malha Fechada com ganho
+    # Malha Fechada com ganho proporcional e integral
     FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
     FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas esquações a diferenças
 
-    # Malha Fechada com ganho
-    FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
-    FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas esquações a diferenças
-
-    # Malha Fechada com ganho integral e derivativo
+    # Malha Fechada com ganho proporcional, integral e derivativo
     FechadaComGanhoIntegralDerivativo = malha.FechadaComGanhoIntegralDerivativo()
     FechadaComGanhoIntegralDerivativo.execute()
 
-    # plt.plotMalha(FechadaComGanhoIntegral)
-    plt.plotMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
-    # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral])
+    plt.plotMalha(malhaOriginal)
+    # plt.plotMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
+    # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
     # plt.plotAndSaveMalha(FechadaComGanhoIntegral)
-    # plt.plotAndSaveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral])
+    # plt.plotAndSaveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
 
 if __name__ == '__main__': # chamada da funcao principal
     main() # chamada da função main
