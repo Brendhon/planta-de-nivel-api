@@ -1,8 +1,13 @@
 import modules.controlers.meshes as malha
 import modules.plots.plot as plt
+import modules.data.constants as const
 
 def main():
     
+    # const.COEFICIENTE_A1 = 0.904837
+    # const.COEFICIENTE_B1 = 0.095163
+    # const.TEMPO_AMOSTRAGEM = 0.1
+
     # Malha Original
     malhaOriginal = malha.Original()
     malhaOriginal.execute()

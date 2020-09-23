@@ -19,13 +19,13 @@ ENTRADA, SAIDA, TEMPO = readMat()
 TEMPO_AMOSTRAGEM = TEMPO[0][1]
 
 # Calculando intervalo de tempo
-TEMPO_AUX = arange(0,200,1)
+TEMPO_AUX = arange(0,6,0.1)
 
 # Calculando coeficientes
 COEFICIENTE_A1, COEFICIENTE_B1 = calculate()
 
-# print(f'COEFICIENTE_A1 = {COEFICIENTE_A1}')
-# print(f'COEFICIENTE_B1 = {COEFICIENTE_B1}')
+print(f'COEFICIENTE_A1 = {COEFICIENTE_A1}')
+print(f'COEFICIENTE_B1 = {COEFICIENTE_B1}')
 
 # # Valores dos coeficientes da planta de nível
 # COEFICIENTE_A1 = 0.99736
