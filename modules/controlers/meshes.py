@@ -18,6 +18,7 @@ class Malha(ABC):
         self.resposta = []
         self.legenda = legend
         self.overshoot = 0
+        self.erroRegimePermanente = 0
         
     @abstractmethod
     def execute(self):
@@ -41,7 +42,11 @@ class Original(Malha):
         # "Alterando" amplitude do degrau
         self.resposta = yout*self.valorEntrada
 
+        # Calcular overshoot
         self.overshoot = con.step_info(sys)['Overshoot']
+
+        # Calcular erro em regime permanente
+        self.erroRegimePermanente = round(self.valorEntrada - self.resposta[len(self.resposta)-1], 2)
         
 class Aberta(Malha):
 
@@ -61,6 +66,9 @@ class Aberta(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
+
+        # Calcular erro em regime permanente
+        self.erroRegimePermanente = round(self.SP - self.PV, 2)
         
 class Fechada(Malha):
 
@@ -86,6 +94,9 @@ class Fechada(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
+
+        # Calcular erro em regime permanente
+        self.erroRegimePermanente = round(self.SP - self.PV, 2)
 
 
 class FechadaComGanho(Malha):
@@ -113,6 +124,9 @@ class FechadaComGanho(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
+
+        # Calcular erro em regime permanente
+        self.erroRegimePermanente = round(self.SP - self.PV, 2)
 
 class FechadaComGanhoIntegral(Malha):
 
@@ -153,6 +167,9 @@ class FechadaComGanhoIntegral(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
+
+        # Calcular erro em regime permanente
+        self.erroRegimePermanente = round(self.SP - self.PV, 2)
 
 
 class FechadaComGanhoIntegralDerivativo(Malha):
@@ -205,3 +222,6 @@ class FechadaComGanhoIntegralDerivativo(Malha):
 
         # Calcular overshoot
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
+        
+        # Calcular erro em regime permanente
+        self.erroRegimePermanente = round(self.SP - self.PV, 2)

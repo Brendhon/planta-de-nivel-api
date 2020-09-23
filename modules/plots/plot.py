@@ -33,7 +33,7 @@ def plotMalha(malha):
     pyplot.legend()
 
     # Mostrando os dados e a grade
-    text = f'Overshoot: {malha.overshoot}%'
+    text = f'Overshoot: {malha.overshoot}%\nErro: {malha.erroRegimePermanente}'
     pyplot.text(0.5, 0.3, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
     pyplot.grid(True)
