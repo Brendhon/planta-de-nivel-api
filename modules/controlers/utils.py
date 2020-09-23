@@ -16,8 +16,7 @@ def calculateOvershoot(array, sp):
 def accommodationPoint(array, pv, overshoot):
 
     # Variaveis auxiliares
-    y = 0
-    numeroCasas = 2
+    numeroCasas = 3
 
     valorPossivel1 = round(pv*0.99, numeroCasas)
     valorPossivel2 = round(pv/0.99, numeroCasas)
