@@ -27,6 +27,7 @@ def main():
     FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
     FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas esquações a diferenças
 
+    plt.plotMalha(FechadaComGanhoIntegral)
     # plt.plotMalhas([malhaOriginal, malhaAberta])
     # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral])
     # plt.plotAndSaveMalha(FechadaComGanhoIntegral)

@@ -18,8 +18,8 @@ def accommodationPoint(array, pv, overshoot):
     # Variaveis auxiliares
     numeroCasas = 3
 
-    valorPossivel1 = round(pv*0.99, numeroCasas)
-    valorPossivel2 = round(pv/0.99, numeroCasas)
+    valorPossivel1 = round(pv*0.982, numeroCasas)
+    valorPossivel2 = round(pv/0.982, numeroCasas)
     indexP1 = 0
     indexP2 = 0
 
