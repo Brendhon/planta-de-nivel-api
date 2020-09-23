@@ -32,10 +32,10 @@ def main():
     # malhaComGanhoIntegralDerivativo.execute() # Executando as operações baseadas nas esquações a diferenças
 
     # plt.saveMalha(malhaAberta)
-    plt.plotMalha(FechadaComGanhoIntegral)
+    # plt.plotMalha(FechadaComGanhoIntegral)
     # plt.saveMalhas([malhaAberta,FechadaComGanhoIntegral])
 
-    # plt.plotMalhas([malhaAberta,FechadaComGanhoIntegral])
+    plt.plotMalhas([malhaAberta,FechadaComGanhoIntegral])
 
 if __name__ == '__main__': # chamada da funcao principal
     main() # chamada da função main
