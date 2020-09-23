@@ -68,7 +68,7 @@ class Aberta(Malha):
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
 
         # Calcular erro em regime permanente
-        self.erroRegimePermanente = round(self.SP - self.PV, 2)
+        self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
         
 class Fechada(Malha):
 
@@ -96,7 +96,7 @@ class Fechada(Malha):
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
 
         # Calcular erro em regime permanente
-        self.erroRegimePermanente = round(self.SP - self.PV, 2)
+        self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
 
 
 class FechadaComGanho(Malha):
@@ -126,7 +126,7 @@ class FechadaComGanho(Malha):
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
 
         # Calcular erro em regime permanente
-        self.erroRegimePermanente = round(self.SP - self.PV, 2)
+        self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
 
 class FechadaComGanhoIntegral(Malha):
 
@@ -169,7 +169,7 @@ class FechadaComGanhoIntegral(Malha):
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
 
         # Calcular erro em regime permanente
-        self.erroRegimePermanente = round(self.SP - self.PV, 2)
+        self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
 
 
 class FechadaComGanhoIntegralDerivativo(Malha):
@@ -224,4 +224,4 @@ class FechadaComGanhoIntegralDerivativo(Malha):
         self.overshoot = calculateOvershoot(self.resposta, self.SP)
         
         # Calcular erro em regime permanente
-        self.erroRegimePermanente = round(self.SP - self.PV, 2)
+        self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
