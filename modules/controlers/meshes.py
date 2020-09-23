@@ -12,8 +12,8 @@ class Malha(ABC):
 
         self.PV = const.PV
         self.SP = const.SP
-        # self.tempo = const.TEMPO_AUX
-        self.tempo = const.TEMPO[0]
+        self.tempo = const.TEMPO_AUX
+        # self.tempo = const.TEMPO[0]
 
         self.resposta = []
         self.legenda = legend

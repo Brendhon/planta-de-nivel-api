@@ -4,10 +4,6 @@ import modules.data.constants as const
 
 def main():
     
-    # const.COEFICIENTE_A1 = 0.904837
-    # const.COEFICIENTE_B1 = 0.095163
-    # const.TEMPO_AMOSTRAGEM = 0.1
-
     # Malha Original
     malhaOriginal = malha.Original()
     malhaOriginal.execute()
@@ -32,8 +28,12 @@ def main():
     FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
     FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas esquações a diferenças
 
-    plt.plotMalha(FechadaComGanhoIntegral)
-    # plt.plotMalhas([malhaOriginal, malhaAberta])
+    # Malha Fechada com ganho integral e derivativo
+    FechadaComGanhoIntegralDerivativo = malha.FechadaComGanhoIntegralDerivativo()
+    FechadaComGanhoIntegralDerivativo.execute()
+
+    # plt.plotMalha(FechadaComGanhoIntegral)
+    plt.plotMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
     # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral])
     # plt.plotAndSaveMalha(FechadaComGanhoIntegral)
     # plt.plotAndSaveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral])
