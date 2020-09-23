@@ -27,8 +27,8 @@ def main():
     FechadaComGanhoIntegralDerivativo = malha.FechadaComGanhoIntegralDerivativo()
     FechadaComGanhoIntegralDerivativo.execute()
 
-    plt.plotMalha(malhaAberta)
-    # plt.plotMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
+    # plt.plotMalha(malhaAberta)
+    plt.plotMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
     # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
     # plt.plotAndSaveMalha(FechadaComGanhoIntegral)
     # plt.plotAndSaveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
