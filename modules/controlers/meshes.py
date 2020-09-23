@@ -24,8 +24,31 @@ class Malha(ABC):
     @abstractmethod
     def execute(self):
         pass
-        
 
+class Original(Malha):
+
+    def __init__(self):
+        super().__init__('Malha Original')
+        self.ts = const.TEMPO_AMOSTRAGEM
+        self.valorEntrada = const.ENTRADA[0][1]
+    
+    def execute(self):
+
+        # Função de trasferencia
+        sys = con.TransferFunction(self.b1,  [1, -self.a1], self.ts)
+
+        # Resposta ao degrau
+        [xout, yout] = con.step_response(sys, const.TEMPO)
+
+        # "Alterando" amplitude do degrau
+        self.resposta = yout*self.valorEntrada
+
+        self.overshoot = 'Sem overshoot'
+
+        # Calcular ponto de acomodação
+        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.resposta[len(self.resposta)-1], self.overshoot)
+            
+        
 class Aberta(Malha):
 
     def __init__(self):
@@ -48,7 +71,6 @@ class Aberta(Malha):
         # Calcular ponto de acomodação
         self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
         
-
 class Fechada(Malha):
 
     def __init__(self):

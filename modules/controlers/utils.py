@@ -7,7 +7,7 @@ def calculateOvershoot(array, sp):
     maiorValor = max(array, key=float)
 
     if sp < maiorValor:
-        overshoot = f'Overshoot: {round((maiorValor - sp) * 100, 2)}%'
+        overshoot = f'Overshoot: {round((maiorValor - sp)/sp * 100, 2)}%'
     else:
         overshoot = 'Sem overshoot'
     
@@ -43,7 +43,7 @@ def accommodationPoint(array, pv, overshoot):
             if round(array[i], numeroCasas) == valorPossivel2:
                 indexP2 = i
         
-        if indexP1 > indexP2:
+        if indexP1 >= indexP2:
             return indexP1, valorPossivel1
         else:
             return indexP2, valorPossivel2
