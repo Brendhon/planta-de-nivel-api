@@ -33,7 +33,13 @@ def plotMalha(malha):
     pyplot.legend()
 
     # Mostrando os dados e a grade
-    text = f'Overshoot: {malha.overshoot}%\nErro: {malha.erroRegimePermanente}'
+    if malha.tempo_acomodacao != 0:
+        pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c='black', alpha = 0.8)	
+        pyplot.annotate(f'x = {malha.tempo_acomodacao}\ny = {malha.valor_acomodacao}', (malha.tempo_acomodacao, malha.valor_acomodacao))	
+        text = f'{malha.overshoot}\nValor de acomodação: {malha.valor_acomodacao}\nTempo de acomodação: {malha.tempo_acomodacao}s'
+    else:
+        text = f'Overshoot: {malha.overshoot}%\nErro: {malha.erroRegimePermanente}'
+        
     pyplot.text(0.5, 0.3, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
     pyplot.grid(True)

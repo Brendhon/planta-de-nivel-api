@@ -7,7 +7,7 @@ def calculate():
     entrada = const.ENTRADA
     saida = const.SAIDA
 
-    # Pegar numero de linhas e colunass
+    # Pegar numero de linhas e colunas
     [L, C] = np.shape(saida)
 
     if (L>1):

@@ -1,7 +1,7 @@
 import modules.data.constants as const
 from abc import ABC, abstractmethod
 import control as con
-from modules.controlers.utils import calculateOvershoot
+from modules.controlers.utils import calculateOvershoot, accommodationPoint
 
 class Malha(ABC):
 
@@ -19,6 +19,8 @@ class Malha(ABC):
         self.legenda = legend
         self.overshoot = 0
         self.erroRegimePermanente = 0
+        self.tempo_acomodacao = 0	
+        self.valor_acomodacao = 0
         
     @abstractmethod
     def execute(self):
@@ -28,6 +30,15 @@ class Original(Malha):
 
     def __init__(self):
         super().__init__('Malha Original')
+    
+    def execute(self):
+        self.resposta = const.SAIDA[0]
+        
+
+class OriginalEmRespostaEntrada(Malha):
+
+    def __init__(self):
+        super().__init__('Malha Original em Resposta a entrada')
         self.ts = const.TEMPO_AMOSTRAGEM
         self.valorEntrada = const.ENTRADA[0][1]
     
@@ -69,6 +80,8 @@ class Aberta(Malha):
 
         # Calcular erro em regime permanente
         self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
+
+        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
         
 class Fechada(Malha):
 
@@ -170,6 +183,11 @@ class FechadaComGanhoIntegral(Malha):
 
         # Calcular erro em regime permanente
         self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
+
+        # Calcular ponto de acomodação	
+        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.PV, self.overshoot)
+
+        print(self.tempo_acomodacao)
 
 
 class FechadaComGanhoIntegralDerivativo(Malha):
