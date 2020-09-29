@@ -3,16 +3,20 @@ numeroCasas = 2
 def calculateOvershoot(array, sp):
 
 	# Variaveis auxiliares
-	overshoot = 0.0
+	overshootPorcentagem = 0.0
+	overshootX = 0.0
+	overshootY = 0.0
 	maiorValor = 0
 
 	maiorValor = max(array, key=float)
+	overshootPorcentagem = round((maiorValor - sp)/sp * 100, 2)
 
-	if sp < maiorValor:
-		overshoot = round((maiorValor - sp)/sp * 100, 2)
+	for i in range(len(array)):	
+		if maiorValor == array[i]: 
+			overshootY = array[i]
+			overshootX = i
 
-	return overshoot
-
+	return overshootX, overshootY, overshootPorcentagem
 
 def temOvershoot(array, pv):
 	valorPossivel1 = round(pv*0.98, numeroCasas)

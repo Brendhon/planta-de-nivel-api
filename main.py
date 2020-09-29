@@ -2,7 +2,7 @@ import modules.controlers.meshes as malha
 import modules.plots.plot as plt
 
 def main():
-
+    
     # Malha Original
     malhaOriginal = malha.Original()
     malhaOriginal.execute()
@@ -31,9 +31,9 @@ def main():
     FechadaComGanhoIntegralDerivativo = malha.FechadaComGanhoIntegralDerivativo()
     FechadaComGanhoIntegralDerivativo.execute()
 
-    plt.plotMalha(FechadaComGanhoIntegral)
-    # plt.plotMalhas([malhaOriginal, malhaOriginalEmRespostaEntrada])
-    # plt.saveMalha(FechadaComGanhoIntegral)
+    plt.plotMalha(FechadaComGanhoIntegralDerivativo)
+    # plt.plotMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegralDerivativo])
+    # plt.saveMalha(FechadaComGanhoIntegralDerivativo)
     # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
     # plt.plotAndSaveMalha(FechadaComGanhoIntegral)
     # plt.plotAndSaveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
