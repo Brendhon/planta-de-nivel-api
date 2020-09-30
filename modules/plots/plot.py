@@ -17,7 +17,7 @@ def saveMalha(malha):
     
     # Mostrando uma caixa com as informações
     text = f'Valor máximo do overshoot ≅ {round(malha.overshootY, 2)}\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
-    pyplot.text(0.5, malha.PV/2, text, style='italic',
+    pyplot.text(0.5, malha.resposta[len(malha.resposta) - 1]/2, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
 
     # Salvando a figura
@@ -63,7 +63,7 @@ def plotMalha(malha):
     
     # Mostrando uma caixa com as informações
     text = f'Valor máximo do overshoot ≅ {round(malha.overshootY, 2)}\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
-    pyplot.text(0.5, malha.PV/2, text, style='italic',
+    pyplot.text(0.5, malha.resposta[len(malha.resposta) - 1]/2, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
 
     # Mostrando a malha
@@ -109,7 +109,7 @@ def plotAndSaveMalha(malha):
     
     # Mostrando uma caixa com as informações
     text = f'Valor máximo do overshoot ≅ {round(malha.overshootY, 2)}\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
-    pyplot.text(0.5, malha.PV/2, text, style='italic',
+    pyplot.text(0.5, malha.resposta[len(malha.resposta) - 1]/2, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
 
     # Mostrando a malha
