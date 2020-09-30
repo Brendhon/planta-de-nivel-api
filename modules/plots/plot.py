@@ -7,8 +7,9 @@ def saveMalha(malha):
     pyplot.legend()
 
     # Adicionando o ponto de Tempo de acomodação
-    pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
-    pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
+    if malha.tempo_acomodacao != 0:
+        pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
+        pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
 
     # Adicionando se tiver o overshoot no gráfico
     if malha.overshootY > malha.PV:
@@ -53,8 +54,9 @@ def plotMalha(malha):
     pyplot.legend()
 
     # Adicionando o ponto de Tempo de acomodação
-    pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
-    pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
+    if malha.tempo_acomodacao != 0:
+        pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
+        pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
 
     # Adicionando se tiver o overshoot no gráfico
     if malha.overshootY > malha.PV:
@@ -99,8 +101,9 @@ def plotAndSaveMalha(malha):
     pyplot.legend()
 
     # Adicionando o ponto de Tempo de acomodação
-    pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
-    pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
+    if malha.tempo_acomodacao != 0:
+        pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
+        pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
 
     # Adicionando se tiver o overshoot no gráfico
     if malha.overshootY > malha.PV:
