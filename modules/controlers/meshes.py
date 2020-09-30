@@ -47,7 +47,7 @@ class OriginalEmRespostaEntrada(Malha):
     
     def execute(self):
 
-        # Função de trasferencia
+        # Função de transferência
         sys = con.TransferFunction(self.b1,  [1, -self.a1], self.ts)
 
         # Resposta ao degrau
@@ -61,6 +61,8 @@ class OriginalEmRespostaEntrada(Malha):
 
         # Calcular erro em regime permanente
         self.erroRegimePermanente = round(self.valorEntrada - self.resposta[len(self.resposta)-1], 2)
+
+        self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.resposta, self.resposta[len(self.resposta)-1], self.overshoot)
         
 class Aberta(Malha):
 
