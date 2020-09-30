@@ -14,10 +14,12 @@ def saveMalha(malha):
     # Adicionando se tiver o overshoot no gráfico
     if malha.overshootY > malha.PV:
         pyplot.scatter(malha.overshootX,malha.overshootY, c=malha.cor)	
-        pyplot.annotate(f'{malha.overshoot}%', (malha.overshootX, malha.overshootY))		
-    
+        pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
+        text = f'Overshoot ≅ {malha.overshoot}%\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
+    else: 
+        text = f'Overshoot ≅ 0%\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
+
     # Mostrando uma caixa com as informações
-    text = f'Valor máximo do overshoot ≅ {round(malha.overshootY, 2)}\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
     pyplot.text(0.5, malha.resposta[len(malha.resposta) - 1]/2, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
 
@@ -37,7 +39,7 @@ def saveMalhas(arrayMalha):
         # Adicionando se tiver o overshoot no gráfico
         if malha.overshootY > malha.PV:
             pyplot.scatter(malha.overshootX,malha.overshootY, c=malha.cor)	
-            pyplot.annotate(f'{malha.overshoot}%', (malha.overshootX, malha.overshootY))
+            pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
 
         # Adicionando legenda
         pyplot.plot(malha.resposta, label=f'{malha.legenda}', color = malha.cor)
@@ -58,13 +60,15 @@ def plotMalha(malha):
         pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
         pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
 
-    # Adicionando se tiver o overshoot no gráfico
+# Adicionando se tiver o overshoot no gráfico
     if malha.overshootY > malha.PV:
         pyplot.scatter(malha.overshootX,malha.overshootY, c=malha.cor)	
-        pyplot.annotate(f'{malha.overshoot}%', (malha.overshootX, malha.overshootY))		
-    
+        pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
+        text = f'Overshoot ≅ {malha.overshoot}%\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
+    else: 
+        text = f'Overshoot ≅ 0%\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
+
     # Mostrando uma caixa com as informações
-    text = f'Valor máximo do overshoot ≅ {round(malha.overshootY, 2)}\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
     pyplot.text(0.5, malha.resposta[len(malha.resposta) - 1]/2, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
 
@@ -84,7 +88,7 @@ def plotMalhas(arrayMalha):
         # Adicionando se tiver o overshoot no gráfico
         if malha.overshootY > malha.PV:
             pyplot.scatter(malha.overshootX,malha.overshootY, c=malha.cor)	
-            pyplot.annotate(f'{malha.overshoot}%', (malha.overshootX, malha.overshootY))
+            pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
 
         # Adicionando legenda
         pyplot.plot(malha.resposta, label=f'{malha.legenda}', color = malha.cor)
@@ -108,10 +112,12 @@ def plotAndSaveMalha(malha):
     # Adicionando se tiver o overshoot no gráfico
     if malha.overshootY > malha.PV:
         pyplot.scatter(malha.overshootX,malha.overshootY, c=malha.cor)	
-        pyplot.annotate(f'{malha.overshoot}%', (malha.overshootX, malha.overshootY))		
-    
+        pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
+        text = f'Overshoot ≅ {malha.overshoot}%\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
+    else: 
+        text = f'Overshoot ≅ 0%\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
+
     # Mostrando uma caixa com as informações
-    text = f'Valor máximo do overshoot ≅ {round(malha.overshootY, 2)}\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
     pyplot.text(0.5, malha.resposta[len(malha.resposta) - 1]/2, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
 
@@ -132,7 +138,7 @@ def plotAndSaveMalhas(arrayMalha):
         # Adicionando se tiver o overshoot no gráfico
         if malha.overshootY > malha.PV:
             pyplot.scatter(malha.overshootX,malha.overshootY, c=malha.cor)	
-            pyplot.annotate(f'{malha.overshoot}%', (malha.overshootX, malha.overshootY))
+            pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
 
         # Adicionando legenda
         pyplot.plot(malha.resposta, label=f'{malha.legenda}', color = malha.cor)
