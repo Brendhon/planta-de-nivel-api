@@ -1,7 +1,7 @@
 import modules.data.constants as const
 from abc import ABC, abstractmethod
 import control as con
-from modules.controlers.utils import calculateOvershoot, accommodationPoint
+from modules.controlers.utils import calculateOvershoot, accommodationPoint, d2c
 from numpy import arange
 from matplotlib import pyplot
 
@@ -56,6 +56,8 @@ class OriginalEmRespostaEntrada(Malha):
 
         # Resposta ao degrau
         [self.xout, self.yout] = con.step_response(self.sys, const.TEMPO)
+
+        print(d2c(self.sys, method='zoh'))
 
         # Pegando as informações do sistema
         info = con.step_info(self.sys, self.xout)

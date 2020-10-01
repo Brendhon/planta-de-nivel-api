@@ -1,6 +1,98 @@
 import numpy as np
 import math
-import cmath
+import cmath	
+from scipy.linalg import inv, expm, eig, eigvals, logm
+import scipy as sp
+from control import *
+from matplotlib.pyplot import *
+
+def d2c(sys,method='zoh'):
+    """Continous to discrete conversion with ZOH method
+    Call:
+    sysc=c2d(sys,method='log')
+    Parameters
+    ----------
+    sys :   System in statespace or Tf form 
+    method: 'zoh' or 'bi'
+    Returns
+    -------
+    sysc: continous system ss or tf
+    
+    """
+    flag = 0
+    if isinstance(sys, TransferFunction):
+        sys=tf2ss(sys)
+        flag=1
+
+    a=sys.A
+    b=sys.B
+    c=sys.C
+    d=sys.D
+    Ts=sys.dt
+    n=np.shape(a)[0]
+    nb=np.shape(b)[1]
+    nc=np.shape(c)[0]
+    tol=1e-12
+    
+    if method=='zoh':
+        if n==1:
+            if b[0,0]==1:
+                A=0
+                B=b/sys.dt
+                C=c
+                D=d
+        else:
+            tmp1=np.hstack((a,b))
+            tmp2=np.hstack((np.zeros((nb,n)),np.eye(nb)))
+            tmp=np.vstack((tmp1,tmp2))
+            s=logm(tmp)
+            s=s/Ts
+            if norm(np.imag(s),inf) > sqrt(sp.finfo(float).eps):
+                print("Warning: accuracy may be poor")
+            s=np.real(s)
+            A=s[0:n,0:n]
+            B=s[0:n,n:n+nb]
+            C=c
+            D=d
+    elif method=='foh':
+        a=np.mat(a)
+        b=np.mat(b)
+        c=np.mat(c)
+        d=np.mat(d)
+        Id = np.mat(np.eye(n))
+        A = logm(a)/Ts
+        A = np.real(np.around(A,12))
+        Anp.mat = np.mat(A)
+        B = (a-Id)**(-2)*Anp.mat**2*b*Ts
+        B = np.real(np.around(B,12))
+        Bnp.mat = np.mat(B)
+        C = c
+        D = d - C*(Anp.mat**(-2)/Ts*(a-Id)-Anp.mat**(-1))*Bnp.mat
+        D = np.real(np.around(D,12))
+    elif method=='bi':
+        a=np.mat(a)
+        b=np.mat(b)
+        c=np.mat(c)
+        d=np.mat(d)
+        poles=eigvals(a)
+        if any(abs(poles-1)<200*sp.finfo(float).eps):
+            print("d2c: some poles very close to one. May get bad results.")
+        
+        I=np.mat(np.eye(n,n))
+        tk = 2 / cmath.sqrt (Ts)
+        A = (2/Ts)*(a-I)*inv(a+I)
+        iab = inv(I+a)*b
+        B = tk*iab
+        C = tk*(c*inv(I+a))
+        D = d- (c*iab)
+    else:
+        print("Method not supported")
+        return
+    
+    sysc=StateSpace(A,B,C,D)
+    if flag==1:
+        sysc=ss2tf(sysc)
+    return sysc
 
 numeroCasas = 2
 
@@ -66,8 +158,8 @@ def calculateMF(csi):
 	return mf
 
 def calculateG(k, tal, wcg):
-	imag = (tal*wcg)*1j
-	g = k/(imag+1)
+	np.imag = (tal*wcg)*1j
+	g = k/(np.imag+1)
 	return g
 
 def calculateModG(g):

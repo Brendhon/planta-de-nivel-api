@@ -12,12 +12,12 @@ def main():
     malhaOriginalEmRespostaEntrada.execute()
 
     # Malha Aberta
-    # malhaAberta = malha.Aberta() # Instanciando classe
-    # malhaAberta.execute() # Executando as operações baseadas nas equações a diferenças
+    malhaAberta = malha.Aberta() # Instanciando classe
+    malhaAberta.execute() # Executando as operações baseadas nas equações a diferenças
 
     # # Malha Fechada 
-    # malhaFechada = malha.Fechada()  # Instanciando classe
-    # malhaFechada.execute() # Executando as operações baseadas nas equações a diferenças
+    malhaFechada = malha.Fechada()  # Instanciando classe
+    malhaFechada.execute() # Executando as operações baseadas nas equações a diferenças
 
     # Malha Fechada com ganho
     FechadaComGanho = malha.FechadaComGanho()  # Instanciando classe
@@ -27,7 +27,7 @@ def main():
     # FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
     # FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas equações a diferenças
 
-    plt.plotMalha(malhaOriginalEmRespostaEntrada)
+    plt.plotMalha(malhaAberta)
     # plt.plotMalhas([malhaOriginal, malhaOriginalEmRespostaEntrada])
     # plt.saveMalha(FechadaComGanhoIntegralDerivativo)
     # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegralDerivativo])

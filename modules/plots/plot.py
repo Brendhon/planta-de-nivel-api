@@ -42,7 +42,6 @@ def saveMalhas(arrayMalha):
             pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
 
         # Adicionando legenda
-
         pyplot.plot(malha.xout, malha.yout, label=f'{malha.legenda}', color = malha.cor)
         pyplot.legend()
 
@@ -61,7 +60,7 @@ def plotMalha(malha):
         pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
         pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
 
-# Adicionando se tiver o overshoot no gráfico
+    # Adicionando se tiver o overshoot no gráfico
     if malha.overshootY > malha.PV:
         pyplot.scatter(malha.overshootX,malha.overshootY, c=malha.cor)	
         pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
@@ -144,7 +143,6 @@ def plotAndSaveMalhas(arrayMalha):
             pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
 
         # Adicionando legenda
-
         pyplot.plot(malha.xout, malha.yout, label=f'{malha.legenda}', color = malha.cor)
         pyplot.legend()
 
