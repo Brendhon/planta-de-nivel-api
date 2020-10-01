@@ -32,7 +32,7 @@ def temOvershoot(array, pv):
 
 	return False
 
-def accommodationPoint(array, pv, overshoot):	
+def accommodationPoint(array, pv):	
 	# Variaveis auxiliares	
 	melhorValor = 1
 	melhorIndex = 0
@@ -47,7 +47,7 @@ def accommodationPoint(array, pv, overshoot):
 			melhorValor = array[i]
 			break
 		
-	return melhorIndex, melhorValor
+	return melhorValor
 
 def calculateCsi(mp):
 	aux = (np.log(mp)/np.pi)**2

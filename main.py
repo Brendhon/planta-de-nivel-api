@@ -3,7 +3,7 @@ import modules.plots.plot as plt
 
 def main():
     
-    # Malha Original
+    # # Malha Original
     malhaOriginal = malha.Original()
     malhaOriginal.execute()
 
@@ -12,30 +12,26 @@ def main():
     malhaOriginalEmRespostaEntrada.execute()
 
     # Malha Aberta
-    malhaAberta = malha.Aberta() # Instanciando classe
-    malhaAberta.execute() # Executando as operações baseadas nas equações a diferenças
+    # malhaAberta = malha.Aberta() # Instanciando classe
+    # malhaAberta.execute() # Executando as operações baseadas nas equações a diferenças
 
     # # Malha Fechada 
-    malhaFechada = malha.Fechada()  # Instanciando classe
-    malhaFechada.execute() # Executando as operações baseadas nas equações a diferenças
+    # malhaFechada = malha.Fechada()  # Instanciando classe
+    # malhaFechada.execute() # Executando as operações baseadas nas equações a diferenças
 
     # Malha Fechada com ganho
     FechadaComGanho = malha.FechadaComGanho()  # Instanciando classe
     FechadaComGanho.execute() # Executando as operações baseadas nas equações a diferenças
 
-    # Malha Fechada com ganho proporcional e integral
-    FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
-    FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas equações a diferenças
+    # # Malha Fechada com ganho proporcional e integral
+    # FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
+    # FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas equações a diferenças
 
-    # Malha Fechada com ganho proporcional, integral e derivativo
-    FechadaComGanhoIntegralDerivativo = malha.FechadaComGanhoIntegralDerivativo()
-    FechadaComGanhoIntegralDerivativo.execute()
-
-    plt.plotMalha(FechadaComGanhoIntegralDerivativo)
-    # plt.plotMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegralDerivativo])
+    plt.plotMalha(malhaOriginalEmRespostaEntrada)
+    # plt.plotMalhas([malhaOriginal, malhaOriginalEmRespostaEntrada])
     # plt.saveMalha(FechadaComGanhoIntegralDerivativo)
-    # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
-    # plt.plotAndSaveMalha(FechadaComGanhoIntegral)
+    # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegralDerivativo])
+    # plt.plotAndSaveMalha(malhaAberta)
     # plt.plotAndSaveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegral, FechadaComGanhoIntegralDerivativo])
 
 if __name__ == '__main__': # chamada da função principal

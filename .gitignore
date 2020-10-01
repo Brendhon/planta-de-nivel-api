@@ -145,6 +145,7 @@ dmypy.json
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+/**/*.vscode
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
@@ -152,4 +153,5 @@ dmypy.json
 
 # Imagens
 /**/*.png
+
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode

@@ -18,11 +18,6 @@ ENTRADA, SAIDA, TEMPO = readMat()
 # Calculando intervalo de tempo
 TEMPO_AMOSTRAGEM = TEMPO[0][1]
 
-# Calculando intervalo de tempo
-TEMPO_PLOT_INICIO = 0
-TEMPO_PLOT_FIM = 40
-TEMPO_PLOTAGEM = arange(TEMPO_PLOT_INICIO,TEMPO_PLOT_FIM,TEMPO_AMOSTRAGEM)
-
 # Calculando coeficientes
 COEFICIENTE_A1, COEFICIENTE_B1 = calculate()
 

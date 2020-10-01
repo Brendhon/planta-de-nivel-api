@@ -42,7 +42,8 @@ def saveMalhas(arrayMalha):
             pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
 
         # Adicionando legenda
-        pyplot.plot(malha.resposta, label=f'{malha.legenda}', color = malha.cor)
+
+        pyplot.plot(malha.xout, malha.yout, label=f'{malha.legenda}', color = malha.cor)
         pyplot.legend()
 
     # Salvando todas as malhas passadas
@@ -52,7 +53,7 @@ def saveMalhas(arrayMalha):
 def plotMalha(malha):
 
     # Plotando a malha e adicionando legenda
-    pyplot.plot(malha.resposta, label=f'{malha.legenda}', color = malha.cor)
+    pyplot.plot(malha.xout, malha.yout, label=f'{malha.legenda}', color = malha.cor)
     pyplot.legend()
 
     # Adicionando o ponto de Tempo de acomodação
@@ -69,7 +70,7 @@ def plotMalha(malha):
         text = f'Overshoot ≅ 0%\nErro em regime permanente ≅ {malha.erroRegimePermanente}\nValor de acomodação ≅ {round(malha.valor_acomodacao, 2)}\nTempo de acomodação ≅ {malha.tempo_acomodacao}s'
 
     # Mostrando uma caixa com as informações
-    pyplot.text(0.5, malha.resposta[len(malha.resposta) - 1]/2, text, style='italic',
+    pyplot.text(0.5, malha.PV/2, text, style='italic',
         bbox={'facecolor': 'cyan', 'alpha': 0.5, 'pad': 10})
 
     # Mostrando a malha
@@ -82,8 +83,9 @@ def plotMalhas(arrayMalha):
     for malha in arrayMalha:
 
         # Adicionando ponto de tempo de acomodação no gráfico
-        pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
-        pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
+        if malha.tempo_acomodacao != 0 :
+            pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
+            pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
 
         # Adicionando se tiver o overshoot no gráfico
         if malha.overshootY > malha.PV:
@@ -91,7 +93,7 @@ def plotMalhas(arrayMalha):
             pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
 
         # Adicionando legenda
-        pyplot.plot(malha.resposta, label=f'{malha.legenda}', color = malha.cor)
+        pyplot.plot(malha.xout, malha.yout, label=f'{malha.legenda}', color = malha.cor)
         pyplot.legend()
 
     # Mostrando todas as malhas passadas
@@ -132,8 +134,9 @@ def plotAndSaveMalhas(arrayMalha):
     for malha in arrayMalha:
 
         # Adicionando ponto de tempo de acomodação no gráfico
-        pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
-        pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
+        if malha.tempo_acomodacao != 0 :
+            pyplot.scatter(malha.tempo_acomodacao,malha.valor_acomodacao, c=malha.cor)	
+            pyplot.annotate(f'{malha.tempo_acomodacao}s', (malha.tempo_acomodacao, malha.valor_acomodacao))
 
         # Adicionando se tiver o overshoot no gráfico
         if malha.overshootY > malha.PV:
@@ -141,7 +144,8 @@ def plotAndSaveMalhas(arrayMalha):
             pyplot.annotate(f'{round(malha.overshootY, 3)}', (malha.overshootX, malha.overshootY))		
 
         # Adicionando legenda
-        pyplot.plot(malha.resposta, label=f'{malha.legenda}', color = malha.cor)
+
+        pyplot.plot(malha.xout, malha.yout, label=f'{malha.legenda}', color = malha.cor)
         pyplot.legend()
 
     # Mostrando todas as malhas passadas
