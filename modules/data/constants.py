@@ -9,13 +9,15 @@ var = readJson()
 SP = var['SP']
 KP = var['KP']
 KI = var['KI']
-KD = var['KD']
 
 # Pegando vetores de entrada e saída
 ENTRADA, SAIDA, TEMPO = readMat()
 
 # Calculando intervalo de tempo
 TEMPO_AMOSTRAGEM = TEMPO[0][1]
+
+# Calculando intervalo de tempo
+TEMPO_CALCULO = arange(0,(len(TEMPO[0])*TEMPO_AMOSTRAGEM)-TEMPO_AMOSTRAGEM,TEMPO_AMOSTRAGEM)
 
 # Calculando coeficientes
 COEFICIENTE_A1, COEFICIENTE_B1 = calculate()

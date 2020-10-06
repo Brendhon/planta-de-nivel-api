@@ -16,7 +16,7 @@ class Malha(ABC):
         self.kp = const.KP
         self.ki = const.KI
 
-        self.tempo = arange(0,346.8,0.2)
+        self.tempo = const.TEMPO_CALCULO
 
         self.xout = []
         self.yout = []

@@ -1,4 +1,3 @@
-import modules.data.constants as const 
 import numpy as np
 
 numeroCasas = 2
@@ -99,8 +98,8 @@ def calculateKpKi(mp, ts, k, tal):
 if __name__ == "__main__":
 	mp = 0.10
 	ts = 70
-	k = 10
-	tal = 4
+	k = 0.8447
+	tal = 280
 
 	kp, ki = calculateKpKi(mp, ts, k, tal)
 
