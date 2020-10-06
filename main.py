@@ -26,12 +26,6 @@ def main():
     # Malha Fechada com ganho proporcional e integral
     FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
     FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas equações a diferenças
-    # print(FechadaComGanho.xout)
-    # print(FechadaComGanho.yout)
-    # aux = [FechadaComGanho.xout, FechadaComGanho.yout]
-    # print(aux)
-    # print(len(FechadaComGanho.xout))
-    # print(len(FechadaComGanho.yout))
 
     plt.plotMalha(FechadaComGanhoIntegral)
     # plt.plotMalhas([malhaOriginal, malhaOriginalEmRespostaEntrada, malhaAberta, FechadaComGanho, FechadaComGanhoIntegral])

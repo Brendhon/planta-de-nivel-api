@@ -3,7 +3,7 @@ import modules.data.constants as const
 
 def calculate():
 
-    # Carrengando entrada e saída
+    # Carregando entrada e saída
     entrada = const.ENTRADA
     saida = const.SAIDA
 

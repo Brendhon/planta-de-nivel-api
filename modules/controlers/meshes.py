@@ -2,8 +2,6 @@ import modules.data.constants as const
 from abc import ABC, abstractmethod
 import control as con
 from modules.controlers.utils import accommodationPoint, errorCalculate
-from numpy import arange
-from matplotlib import pyplot
 
 class Malha(ABC):
 
