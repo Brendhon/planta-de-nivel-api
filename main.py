@@ -34,7 +34,7 @@ def main():
     # print(len(FechadaComGanho.yout))
 
     plt.plotMalha(FechadaComGanhoIntegral)
-    # plt.plotMalhas([malhaOriginal, malhaOriginalEmRespostaEntrada])
+    # plt.plotMalhas([malhaOriginal, malhaOriginalEmRespostaEntrada, malhaAberta, FechadaComGanho, FechadaComGanhoIntegral])
     # plt.saveMalha(FechadaComGanhoIntegralDerivativo)
     # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegralDerivativo])
     # plt.plotAndSaveMalha(malhaAberta)

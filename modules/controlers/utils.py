@@ -1,88 +1,10 @@
 import modules.data.constants as const 
 import numpy as np
-import math
-import cmath	
-from scipy.linalg import inv, expm, eig, eigvals, logm
-import scipy as sp
-from control import *
-from matplotlib.pyplot import *
-
-def d2c(sys,method='zoh'):
-    """Continous to discrete conversion with ZOH method
-    Call:
-    sysc=c2d(sys,method='log')
-    Parameters
-    ----------
-    sys :   System in statespace or Tf form 
-    method: 'zoh' or 'bi'
-    Returns
-    -------
-    sysc: continous system ss or tf
-    
-    """
-    flag = 0
-    if isinstance(sys, TransferFunction):
-        sys=tf2ss(sys)
-        flag=1
-
-    a=sys.A
-    b=sys.B
-    c=sys.C
-    d=sys.D
-    Ts=sys.dt
-    n=np.shape(a)[0]
-    nb=np.shape(b)[1]
-    nc=np.shape(c)[0]
-    tol=1e-12
-    
-    if method=='zoh':
-        if n==1:
-            if b[0,0]==1:
-                A=0
-                B=b/sys.dt
-                C=c
-                D=d
-        else:
-            tmp1=np.hstack((a,b))
-            tmp2=np.hstack((np.zeros((nb,n)),np.eye(nb)))
-            tmp=np.vstack((tmp1,tmp2))
-            s=logm(tmp)
-            s=s/Ts
-            if norm(np.imag(s),inf) > sqrt(sp.finfo(float).eps):
-                print("Warning: accuracy may be poor")
-            s=np.real(s)
-            A=s[0:n,0:n]
-            B=s[0:n,n:n+nb]
-            C=c
-            D=d
-    else:
-        print("Method not supported")
-        return
-    
-    sysc=StateSpace(A,B,C,D)
-    if flag==1:
-        sysc=ss2tf(sysc)
-    return sysc
 
 numeroCasas = 2
 
-def calculateOvershoot(array, sp):
-
-	# Variaveis auxiliares
-	overshootPorcentagem = 0.0
-	overshootX = 0.0
-	overshootY = 0.0
-	maiorValor = 0
-
-	maiorValor = max(array, key=float)
-	overshootPorcentagem = round((maiorValor - sp)/sp * 100, 2)
-
-	for i in range(len(array)):	
-		if maiorValor == array[i]: 
-			overshootY = array[i]
-			overshootX = i*const.TEMPO_AMOSTRAGEM
-
-	return overshootX, overshootY, overshootPorcentagem
+def errorCalculate(sp, finalValue):
+	return abs(round(sp - finalValue, 2))
 
 def temOvershoot(array, pv):
 	valorPossivel1 = round(pv*0.98, numeroCasas)
@@ -95,9 +17,9 @@ def temOvershoot(array, pv):
 	return False
 
 def accommodationPoint(array, pv):	
+
 	# Variaveis auxiliares	
-	melhorValor = 1
-	melhorIndex = 0
+	melhorValor = 0
 
 	valorPossivel1 = round(pv*0.98, numeroCasas)	
 	valorPossivel2 = round(pv/0.98, numeroCasas)
@@ -105,7 +27,6 @@ def accommodationPoint(array, pv):
 	for i in range(len(array)):	
 		newArray = array[i:]
 		if(array[i] >= valorPossivel1 and array[i] <= valorPossivel2 and temOvershoot(newArray, pv) == False):
-			melhorIndex = i	
 			melhorValor = array[i]
 			break
 		

@@ -7,7 +7,6 @@ var = readJson()
 
 # Constantes escolhidas
 SP = var['SP']
-PV = var['PV']
 KP = var['KP']
 KI = var['KI']
 KD = var['KD']
@@ -20,7 +19,4 @@ TEMPO_AMOSTRAGEM = TEMPO[0][1]
 
 # Calculando coeficientes
 COEFICIENTE_A1, COEFICIENTE_B1 = calculate()
-
-print(f'COEFICIENTE_A1 = {COEFICIENTE_A1}')
-print(f'COEFICIENTE_B1 = {COEFICIENTE_B1}')
 

@@ -1,7 +1,7 @@
 import modules.data.constants as const
 from abc import ABC, abstractmethod
 import control as con
-from modules.controlers.utils import calculateOvershoot, accommodationPoint, d2c
+from modules.controlers.utils import accommodationPoint, errorCalculate
 from numpy import arange
 from matplotlib import pyplot
 
@@ -12,12 +12,15 @@ class Malha(ABC):
         self.ts = const.TEMPO_AMOSTRAGEM
         self.sys = con.TransferFunction(const.COEFICIENTE_B1,  [1, -const.COEFICIENTE_A1], self.ts)
 
-        self.PV = const.PV
         self.SP = const.SP
+        self.kp = const.KP
+        self.ki = const.KI
+
         self.tempo = arange(0,346.8,0.2)
 
         self.xout = []
         self.yout = []
+        self.valorEstacionario = 0
 
         self.legenda = legend
         self.cor = color
@@ -43,14 +46,14 @@ class Original(Malha):
     def execute(self):
         self.xout =  const.TEMPO[0]
         self.yout = const.SAIDA[0]
-        self.PV = self.yout[len(self.yout)-1]
+        self.valorEstacionario = self.yout[len(self.yout)-1]
         
 
 class OriginalEmRespostaEntrada(Malha):
 
     def __init__(self):
         super().__init__('Malha Original em Resposta a entrada', 'y')
-        self.valorEntrada = const.ENTRADA[0][1]
+        self.SP = const.ENTRADA[0][1]
     
     def execute(self):
 
@@ -61,13 +64,22 @@ class OriginalEmRespostaEntrada(Malha):
         info = con.step_info(self.sys, self.xout)
 
         # "Alterando" amplitude do degrau
-        self.yout = self.yout*self.valorEntrada
+        self.yout = self.yout*self.SP
 
-        self.PV = self.yout[len(self.yout)-1]
+        # Pegando o valor de estado estacionário  
+        self.valorEstacionario = info['SteadyStateValue']*self.SP
+
+        # Ponto de acomodação
         self.tempo_acomodacao = info['SettlingTime']
-        self.valor_acomodacao = accommodationPoint(self.yout, self.PV)
-        self.overshootX, self.overshootY, self.overshoot = calculateOvershoot(self.yout, self.SP)
-        self.erroRegimePermanente = round(self.valorEntrada - self.PV, 2)  
+        self.valor_acomodacao = accommodationPoint(self.yout, self.valorEstacionario)
+
+        # Overshoot
+        self.overshootX = info['PeakTime']
+        self.overshootY = info['Peak']*self.SP
+        self.overshoot = info['Overshoot']
+
+        # Erro em regime permanente
+        self.erroRegimePermanente = errorCalculate(self.SP,self.valorEstacionario)
 
 class Aberta(Malha):
 
@@ -79,14 +91,27 @@ class Aberta(Malha):
         # Resposta ao degrau
         [self.xout, self.yout] = con.step_response(self.sys, self.tempo)
 
+        # "Alterando" amplitude do degrau
+        self.yout = self.yout*self.SP
+
+        # Pegando as informações sobre o sistema 
         info = con.step_info(self.sys, self.xout)
         
-        self.PV = self.yout[len(self.yout)-1]
+        # Pegando o valor de estado estacionário  
+        self.valorEstacionario = info['SteadyStateValue']*self.SP
+
+        # Ponto de acomodação
         self.tempo_acomodacao = info['SettlingTime']
-        self.valor_acomodacao = accommodationPoint(self.yout, self.PV)
-        self.overshootX, self.overshootY, self.overshoot = calculateOvershoot(self.yout, self.SP)
-        self.erroRegimePermanente = round(self.SP - self.PV, 2)
-        
+        self.valor_acomodacao = accommodationPoint(self.yout, self.valorEstacionario)
+
+        # Overshoot
+        self.overshootX = info['PeakTime']
+        self.overshootY = info['Peak']*self.SP
+        self.overshoot = info['Overshoot']
+
+        # Erro em regime permanente
+        self.erroRegimePermanente = errorCalculate(self.SP,self.valorEstacionario)
+             
 class Fechada(Malha):
 
     def __init__(self):
@@ -95,140 +120,105 @@ class Fechada(Malha):
     def execute(self):
 
         # Realimentando a malha
-        sysFechada = con.feedback(self.sys, self.SP)
+        sysFechada = con.feedback(self.sys, 1)
         
         # Resposta ao degrau
         [self.xout, self.yout] = con.step_response(sysFechada, self.tempo)
 
+        # "Alterando" amplitude do degrau
+        self.yout = self.yout*self.SP
+
         # Pegando as informações sobre o sistema
         info = con.step_info(sysFechada, self.xout)
         
-        self.PV = self.yout[len(self.yout)-1]
+        # Pegando o valor de estado estacionário  
+        self.valorEstacionario = info['SteadyStateValue']*self.SP
+
+        # Ponto de acomodação
         self.tempo_acomodacao = info['SettlingTime']
-        self.valor_acomodacao = accommodationPoint(self.yout, self.PV)
-        self.overshootX, self.overshootY, self.overshoot = calculateOvershoot(self.yout, self.SP)
-        self.erroRegimePermanente = round(self.SP - self.PV, 2)
+        self.valor_acomodacao = accommodationPoint(self.yout, self.valorEstacionario)
+
+        # Overshoot
+        self.overshootX = info['PeakTime']
+        self.overshootY = info['Peak']*self.SP
+        self.overshoot = info['Overshoot']
+
+        # Erro em regime permanente
+        self.erroRegimePermanente = errorCalculate(self.SP,self.valorEstacionario)
 
 class FechadaComGanho(Malha):
 
     def __init__(self):
         super().__init__('Malha Fechada com ganho proporcional', 'r')
-        self.kp = const.KP
-    
+           
     def execute(self):
 
         # Atribuindo o ganho
         sysGanho = self.sys*self.kp
 
         # Realimentando a malha
-        sysFechada = con.feedback(sysGanho, self.SP)
+        sysFechada = con.feedback(sysGanho, 1)
         
         # Resposta ao degrau
         [self.xout, self.yout] = con.step_response(sysFechada, self.tempo)
 
+        # "Alterando" amplitude do degrau
+        self.yout = self.yout*self.SP
+
         # Pegando as informações sobre o sistema
         info = con.step_info(sysFechada, self.xout)
         
+        # Pegando o valor de estado estacionário  
+        self.valorEstacionario = info['SteadyStateValue']*self.SP
 
-        self.PV = self.yout[len(self.yout)-1]
+        # Ponto de acomodação
         self.tempo_acomodacao = info['SettlingTime']
-        self.valor_acomodacao = accommodationPoint(self.yout, self.PV)
+        self.valor_acomodacao = accommodationPoint(self.yout, self.valorEstacionario)
 
         # Overshoot
         self.overshootX = info['PeakTime']
-        self.overshootY = info['Peak']
+        self.overshootY = info['Peak']*self.SP
         self.overshoot = info['Overshoot']
-        self.erroRegimePermanente = round(self.SP - self.PV, 2)
 
+        # Erro em regime permanente
+        self.erroRegimePermanente = errorCalculate(self.SP,self.valorEstacionario)
 
 class FechadaComGanhoIntegral(Malha):
 
     def __init__(self):
         super().__init__('Malha Fechada com ganho proporcional e integral', 'navy')
-        self.kp = const.KP
-        self.ki = const.KI
     
     def execute(self):
 
-        # Atribuindo o ganho
+        # Criando a função de transferência auxiliar
         sysAux = con.TransferFunction([1, 0],  [1, -1], self.ts)
 
-
-        # Adicionar ganho ao sistema
+        # Criando a transferência do controlador
         sysControlador = sysAux*self.ki*self.ts + self.kp
         
-        aux = sysControlador*self.sys
-
         # Realimentando a malha
-        sysGanhoIntegral = con.feedback(aux, self.SP)
+        sysGanhoIntegral = con.feedback(sysControlador*self.sys, 1)
         
         # Resposta ao degrau
         [self.xout, self.yout] = con.step_response(sysGanhoIntegral, self.tempo)
 
+        # "Alterando" amplitude do degrau
+        self.yout = self.yout*self.SP
+
         # Pegando as informações sobre o sistema
         info = con.step_info(sysGanhoIntegral, self.xout)
         
-        self.PV = info['SteadyStateValue']
+        # Pegando o valor de estado estacionário  
+        self.valorEstacionario = info['SteadyStateValue']*self.SP
+
+        # Ponto de acomodação
         self.tempo_acomodacao = info['SettlingTime']
-        self.valor_acomodacao = accommodationPoint(self.yout, self.PV)
+        self.valor_acomodacao = accommodationPoint(self.yout, self.valorEstacionario)
+
+        # Overshoot
         self.overshootX = info['PeakTime']
-        self.overshootY = info['Peak']
+        self.overshootY = info['Peak']*self.SP
         self.overshoot = info['Overshoot']
-        self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
-        
-# class FechadaComGanhoIntegralDerivativo(Malha):
 
-#     def __init__(self):
-#         super().__init__('Malha Fechada com ganho proporcional, integral e derivativo', 'teal')
-#         self.kp = const.KP
-#         self.ki = const.KI
-#         self.kd = const.KD
-    
-#     def execute(self):
-
-#         # Variaveis auxiliares
-#         erro = 0
-#         proporcional = 0
-#         integrador = 0
-#         controlador = 0
-#         derivador = 0
-
-#         # Calculo do erro anterior
-#         erroAnterior = self.SP - self.PV
-
-#         # Malha aberta
-#         for i in self.tempo:
-
-#             # Calculo do erro
-#             erro = self.SP - self.PV
-
-#             # Ação Proporcional 
-#             proporcional = self.kp*erro   
-
-#             # Ação Integrador 
-#             integrador = integrador + self.ki*self.ts*erro
-            
-#             # Ação Derivador 
-#             derivador = ((erro - erroAnterior)/self.ts)*self.kd
-
-#             # Ação controlador 
-#             controlador = integrador + proporcional + derivador
-            
-#             # Atualizando erro
-#             erroAnterior = erro
-
-#             # Adicionando PV no array Resposta
-#             self.yout.append(self.PV)
-
-#             # Calculando um novo valor para o PV
-#             self.PV = self.a1*self.PV + self.b1*controlador
-
-#         # Calcular overshoot
-#         self.overshootX, self.overshootY, self.overshoot = calculateOvershoot(self.yout, self.SP)
-        
-#         # Calcular erro em regime permanente
-#         self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
-
-#         self.tempo_acomodacao, self.valor_acomodacao = accommodationPoint(self.yout, self.PV, self.overshoot)
-
-#         self.xout = self.tempo
+        # Erro em regime permanente
+        self.erroRegimePermanente = errorCalculate(self.SP,self.valorEstacionario)
