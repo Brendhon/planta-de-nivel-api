@@ -57,8 +57,6 @@ class OriginalEmRespostaEntrada(Malha):
         # Resposta ao degrau
         [self.xout, self.yout] = con.step_response(self.sys, const.TEMPO)
 
-        print(d2c(self.sys, method='zoh'))
-
         # Pegando as informações do sistema
         info = con.step_info(self.sys, self.xout)
 
@@ -97,7 +95,7 @@ class Fechada(Malha):
     def execute(self):
 
         # Realimentando a malha
-        sysFechada = con.feedback(self.sys, 1)
+        sysFechada = con.feedback(self.sys, self.SP)
         
         # Resposta ao degrau
         [self.xout, self.yout] = con.step_response(sysFechada, self.tempo)
@@ -123,7 +121,7 @@ class FechadaComGanho(Malha):
         sysGanho = self.sys*self.kp
 
         # Realimentando a malha
-        sysFechada = con.feedback(sysGanho, 1)
+        sysFechada = con.feedback(sysGanho, self.SP)
         
         # Resposta ao degrau
         [self.xout, self.yout] = con.step_response(sysFechada, self.tempo)
@@ -131,10 +129,15 @@ class FechadaComGanho(Malha):
         # Pegando as informações sobre o sistema
         info = con.step_info(sysFechada, self.xout)
         
+
         self.PV = self.yout[len(self.yout)-1]
         self.tempo_acomodacao = info['SettlingTime']
         self.valor_acomodacao = accommodationPoint(self.yout, self.PV)
-        self.overshootX, self.overshootY, self.overshoot = calculateOvershoot(self.yout, self.SP)
+
+        # Overshoot
+        self.overshootX = info['PeakTime']
+        self.overshootY = info['Peak']
+        self.overshoot = info['Overshoot']
         self.erroRegimePermanente = round(self.SP - self.PV, 2)
 
 
@@ -148,22 +151,30 @@ class FechadaComGanhoIntegral(Malha):
     def execute(self):
 
         # Atribuindo o ganho
-        sysGanho = self.sys*self.kp
+        sysAux = con.TransferFunction([1, 0],  [1, -1], self.ts)
+
+
+        # Adicionar ganho ao sistema
+        sysControlador = sysAux*self.ki*self.ts + self.kp
+        
+        aux = sysControlador*self.sys
 
         # Realimentando a malha
-        sysFechada = con.feedback(sysGanho, 1)
+        sysGanhoIntegral = con.feedback(aux, self.SP)
         
         # Resposta ao degrau
-        [self.xout, self.yout] = con.step_response(sysFechada, self.tempo)
+        [self.xout, self.yout] = con.step_response(sysGanhoIntegral, self.tempo)
 
         # Pegando as informações sobre o sistema
-        info = con.step_info(sysFechada, self.xout)
+        info = con.step_info(sysGanhoIntegral, self.xout)
         
-        self.PV = self.yout[len(self.yout)-1]
+        self.PV = info['SteadyStateValue']
         self.tempo_acomodacao = info['SettlingTime']
         self.valor_acomodacao = accommodationPoint(self.yout, self.PV)
-        self.overshootX, self.overshootY, self.overshoot = calculateOvershoot(self.yout, self.SP)
-        self.erroRegimePermanente = round(self.SP - self.PV, 2)
+        self.overshootX = info['PeakTime']
+        self.overshootY = info['Peak']
+        self.overshoot = info['Overshoot']
+        self.erroRegimePermanente = abs(round(self.SP - self.PV, 2))
         
 # class FechadaComGanhoIntegralDerivativo(Malha):
 

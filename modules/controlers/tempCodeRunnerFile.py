@@ -1,5 +1,0 @@
-	# wn = calculateWn(csi, ts)
-	# wcg = calculateWcg(wn)
-	# mf = calculateMF(csi)
-	# g = calculateG(k, tal, wcg)
-	# print(g)

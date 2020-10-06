@@ -1,3 +1,4 @@
+import modules.data.constants as const 
 import numpy as np
 import math
 import cmath	
@@ -54,37 +55,6 @@ def d2c(sys,method='zoh'):
             B=s[0:n,n:n+nb]
             C=c
             D=d
-    elif method=='foh':
-        a=np.mat(a)
-        b=np.mat(b)
-        c=np.mat(c)
-        d=np.mat(d)
-        Id = np.mat(np.eye(n))
-        A = logm(a)/Ts
-        A = np.real(np.around(A,12))
-        Anp.mat = np.mat(A)
-        B = (a-Id)**(-2)*Anp.mat**2*b*Ts
-        B = np.real(np.around(B,12))
-        Bnp.mat = np.mat(B)
-        C = c
-        D = d - C*(Anp.mat**(-2)/Ts*(a-Id)-Anp.mat**(-1))*Bnp.mat
-        D = np.real(np.around(D,12))
-    elif method=='bi':
-        a=np.mat(a)
-        b=np.mat(b)
-        c=np.mat(c)
-        d=np.mat(d)
-        poles=eigvals(a)
-        if any(abs(poles-1)<200*sp.finfo(float).eps):
-            print("d2c: some poles very close to one. May get bad results.")
-        
-        I=np.mat(np.eye(n,n))
-        tk = 2 / cmath.sqrt (Ts)
-        A = (2/Ts)*(a-I)*inv(a+I)
-        iab = inv(I+a)*b
-        B = tk*iab
-        C = tk*(c*inv(I+a))
-        D = d- (c*iab)
     else:
         print("Method not supported")
         return
@@ -110,7 +80,7 @@ def calculateOvershoot(array, sp):
 	for i in range(len(array)):	
 		if maiorValor == array[i]: 
 			overshootY = array[i]
-			overshootX = i
+			overshootX = i*const.TEMPO_AMOSTRAGEM
 
 	return overshootX, overshootY, overshootPorcentagem
 

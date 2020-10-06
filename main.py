@@ -3,7 +3,7 @@ import modules.plots.plot as plt
 
 def main():
     
-    # # Malha Original
+    # Malha Original
     malhaOriginal = malha.Original()
     malhaOriginal.execute()
 
@@ -23,11 +23,17 @@ def main():
     FechadaComGanho = malha.FechadaComGanho()  # Instanciando classe
     FechadaComGanho.execute() # Executando as operações baseadas nas equações a diferenças
 
-    # # Malha Fechada com ganho proporcional e integral
-    # FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
-    # FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas equações a diferenças
+    # Malha Fechada com ganho proporcional e integral
+    FechadaComGanhoIntegral = malha.FechadaComGanhoIntegral()  # Instanciando classe
+    FechadaComGanhoIntegral.execute() # Executando as operações baseadas nas equações a diferenças
+    # print(FechadaComGanho.xout)
+    # print(FechadaComGanho.yout)
+    # aux = [FechadaComGanho.xout, FechadaComGanho.yout]
+    # print(aux)
+    # print(len(FechadaComGanho.xout))
+    # print(len(FechadaComGanho.yout))
 
-    plt.plotMalha(malhaAberta)
+    plt.plotMalha(FechadaComGanhoIntegral)
     # plt.plotMalhas([malhaOriginal, malhaOriginalEmRespostaEntrada])
     # plt.saveMalha(FechadaComGanhoIntegralDerivativo)
     # plt.saveMalhas([malhaAberta, malhaFechada, FechadaComGanho, FechadaComGanhoIntegralDerivativo])
