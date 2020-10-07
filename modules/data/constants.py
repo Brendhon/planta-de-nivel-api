@@ -7,8 +7,8 @@ var = readJson()
 
 # Constantes escolhidas
 SP = var['SP']
-KP = var['KP']
-KI = var['KI']
+OVERSHOOT  = var['OVERSHOOT']
+TS  = var['TS']
 
 # Pegando vetores de entrada e saída
 ENTRADA, SAIDA, TEMPO = readMat()

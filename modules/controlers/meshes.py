@@ -1,7 +1,7 @@
 import modules.data.constants as const
 from abc import ABC, abstractmethod
 import control as con
-from modules.controlers.utils import accommodationPoint, errorCalculate
+from modules.controlers.utils import accommodationPoint, errorCalculate, KpKi
 
 class Malha(ABC):
 
@@ -11,8 +11,7 @@ class Malha(ABC):
         self.sys = con.TransferFunction(const.COEFICIENTE_B1,  [1, -const.COEFICIENTE_A1], self.ts)
 
         self.SP = const.SP
-        self.kp = const.KP
-        self.ki = const.KI
+        self.kp, self.ki = KpKi(self.sys)
 
         self.tempo = const.TEMPO_CALCULO
 
@@ -31,7 +30,7 @@ class Malha(ABC):
         self.valor_acomodacao = 0
 
         self.erroRegimePermanente = 0
-        
+
     @abstractmethod
     def execute(self):
         pass
@@ -52,7 +51,7 @@ class OriginalEmRespostaEntrada(Malha):
     def __init__(self):
         super().__init__('Malha Original em Resposta a entrada', 'y')
         self.SP = const.ENTRADA[0][1]
-    
+
     def execute(self):
 
         # Resposta ao degrau

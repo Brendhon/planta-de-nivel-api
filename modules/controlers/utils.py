@@ -1,6 +1,8 @@
 import numpy as np
+import modules.data.constants as const
+import control as con
 
-numeroCasas = 2
+numeroCasas = 3
 
 def errorCalculate(sp, finalValue):
 	return abs(round(sp - finalValue, 2))
@@ -30,6 +32,23 @@ def accommodationPoint(array, pv):
 			break
 		
 	return melhorValor
+
+def tall(array, valorEstacionario, ts):	
+
+	# Variaveis auxiliares	
+	posicaoX = 0
+	valorY = round(valorEstacionario*0.63, numeroCasas)	
+	
+	for i in range(len(array)):	
+		if(array[i] >= valorY):
+			posicaoX = i
+			break
+		
+	return posicaoX*ts
+
+def K(sp, valorEstacionario):
+	return valorEstacionario/sp
+
 
 def calculateCsi(mp):
 	aux = (np.log(mp)/np.pi)**2
@@ -95,13 +114,29 @@ def calculateKpKi(mp, ts, k, tal):
 
 	return kp, ki
 	
-if __name__ == "__main__":
-	mp = 0.10
-	ts = 70
-	k = 0.8447
-	tal = 280
+def KpKi(sys):
 
+	# Pegando os valores do OVERSHOOT e Tempo de acomodação desejados
+	mp = const.OVERSHOOT
+	ts = const.TS
+
+	# Resposta ao degrau
+	[xout, yout] = con.step_response(sys, const.TEMPO)
+	
+	# "Alterando" amplitude do degrau
+	yout = yout*const.SP
+
+	# Pegando as informações sobre o sistema
+	info = con.step_info(sys, xout)
+
+	# Pegando o valor de estado estacionário  
+	valorEstacionario = info['SteadyStateValue']*const.SP
+	
+	# Calculando valor de K e tall
+	k = K(const.SP, valorEstacionario)
+	tal = tall(yout, valorEstacionario, const.TEMPO_AMOSTRAGEM)
+
+	# Calculando valores de Kp e Ki
 	kp, ki = calculateKpKi(mp, ts, k, tal)
 
-	print(kp)
-	print(ki)
+	return kp, ki
