@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ```
 Ainda na pasta raiz
 ```
-python main.py
+python app.py
 ```
 
 ## License
