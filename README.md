@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/Brendhon/ProjetoC213.svg?branch=master)](https://travis-ci.com/Brendhon/ProjetoC213)
 # API - Projeto C213
 Projeto realizado para colocar em prática os conhecimentos adquiridos na disciplina de **C213** (Sistemas Embarcados) durante a graduação em Engenharia de Computação pelo [Inatel](https://inatel.br/home/).
 
