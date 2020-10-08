@@ -1,14 +1,4 @@
-import json
 import scipy.io as sio
-
-def readJson():
-    
-    # Lendo o arquivo JSON
-    with open('data.json') as json_data:
-        constants = json.load(json_data)
-        json_data.close()
-    
-    return constants
 
 def readMat():
     

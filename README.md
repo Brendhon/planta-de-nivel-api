@@ -1,16 +1,16 @@
-# Projeto C213
-Porjeto realizado para colocar em prática os conhecimentos adquiridos na diciplina de **C213** (Sistemas Embarcados) durante a graduação em Engenharia de Computação pelo [Inatel](https://inatel.br/home/).
+# API - Projeto C213
+Projeto realizado para colocar em prática os conhecimentos adquiridos na disciplina de **C213** (Sistemas Embarcados) durante a graduação em Engenharia de Computação pelo [Inatel](https://inatel.br/home/).
 
 ## Conteúdos estudados:
 * Modelar sistemas;
-* Indentificar sistemas; 
+* Identificar sistemas; 
 * Implementar controladores.
  
-## Bibliotecas
+## Bibliotecas e frameworks
 * [NumPy](https://numpy.org/)
 * [SciPy](https://www.scipy.org/)
-* [Matplotlib](https://matplotlib.org/)
 * [Control](https://python-control.readthedocs.io/en/0.8.3/)
+* [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
 ## Como usar?
 
