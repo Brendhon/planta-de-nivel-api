@@ -16,17 +16,17 @@ def home():
         pass
 
     try:
-        const.SP = data['SP']
+        const.SP = data['sp']
     except:
         pass
         
     try:
-        const.OVERSHOOT = data['OVERSHOOT']
+        const.OVERSHOOT = data['overshoot']
     except:
         pass
     
     try:
-        const.TS = data['TS'] 
+        const.TS = data['ts'] 
     except:
         pass
 
