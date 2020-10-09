@@ -5,7 +5,7 @@ import json
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET'])
+@app.route("/", methods=['POST'])
 def home():
        
     # Pegando os dados da Requisição 
@@ -43,8 +43,6 @@ def home():
         f'{FechadaComGanho.nome}': FechadaComGanho.returnData(), 
         f'{FechadaComGanhoIntegral.nome}': FechadaComGanhoIntegral.returnData()
     }
-
-    print(FechadaComGanhoIntegral.overshoot)
 
     return jsonify(malhas)
 
