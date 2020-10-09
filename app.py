@@ -5,52 +5,48 @@ import json
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/", methods=['GET'])
 def home():
-    if request.method == 'POST':
+       
+    # Pegando os dados da Requisição 
+    data = request.get_json()
+
+    try:
+        const.SP = data['SP']
+    except:
+        pass
         
-        # Pegando os dados da Requisição 
-        data = request.get_json()
+    try:
+        const.OVERSHOOT = data['OVERSHOOT']
+    except:
+        pass
+    
+    try:
+        const.TS = data['TS'] 
+    except:
+        pass
 
-        try:
-            const.SP = data['SP']
-        except:
-            pass
-            
-        try:
-            const.OVERSHOOT = data['OVERSHOOT']
-        except:
-            pass
-        
-        try:
-            const.TS = data['TS'] 
-        except:
-            pass
+    # Executando as operações
+    malhaOriginal.execute()
+    malhaOriginalEmRespostaEntrada.execute()
+    malhaAberta.execute()
+    malhaFechada.execute()
+    FechadaComGanho.execute()
+    FechadaComGanhoIntegral.execute()
 
-        # Executando as operações
-        malhaOriginal.execute()
-        malhaOriginalEmRespostaEntrada.execute()
-        malhaAberta.execute()
-        malhaFechada.execute()
-        FechadaComGanho.execute()
-        FechadaComGanhoIntegral.execute()
+    # Formando o objeto que será enviado em formato JSON
+    malhas = {
+        f'{malhaOriginal.nome}': malhaOriginal.returnData(), 
+        f'{malhaOriginalEmRespostaEntrada.nome}': malhaOriginalEmRespostaEntrada.returnData(), 
+        f'{malhaAberta.nome}': malhaAberta.returnData(), 
+        f'{malhaFechada.nome}': malhaFechada.returnData(),
+        f'{FechadaComGanho.nome}': FechadaComGanho.returnData(), 
+        f'{FechadaComGanhoIntegral.nome}': FechadaComGanhoIntegral.returnData()
+    }
 
-        return jsonify(data), 201
-    else:
+    print(FechadaComGanhoIntegral.overshoot)
 
-        # Formando o objeto que será enviado em formato JSON
-        malhas = {
-            f'{malhaOriginal.nome}': malhaOriginal.returnData(), 
-            f'{malhaOriginalEmRespostaEntrada.nome}': malhaOriginalEmRespostaEntrada.returnData(), 
-            f'{malhaAberta.nome}': malhaAberta.returnData(), 
-            f'{malhaFechada.nome}': malhaFechada.returnData(),
-            f'{FechadaComGanho.nome}': FechadaComGanho.returnData(), 
-            f'{FechadaComGanhoIntegral.nome}': FechadaComGanhoIntegral.returnData()
-        }
-
-        print(FechadaComGanhoIntegral.overshoot)
-
-        return jsonify(malhas)
+    return jsonify(malhas)
 
 if __name__ == '__main__':
 

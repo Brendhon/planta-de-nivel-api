@@ -4,8 +4,8 @@ from modules.modelar.leastSquares import calculate
 
 # Alternativa para caso as constantes escolhidas não forem escolhidas pelo Usuário
 SP = 50
-OVERSHOOT = 0.3
-TS = 50
+OVERSHOOT = 0.10
+TS = 70
 
 # Pegando vetores de entrada e saída
 ENTRADA, SAIDA, TEMPO = readMat()
