@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, request, Response
+from flask_cors import CORS
 import modules.controlers.meshes as malha
 import modules.data.constants as const
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -13,17 +15,17 @@ def home():
         data = request.get_json()
 
         try:
-            const.SP = data['SP']
+            const.SP = data['sp']
         except:
             pass
             
         try:
-            const.OVERSHOOT = data['OVERSHOOT']
+            const.OVERSHOOT = data['overshoot']
         except:
             pass
         
         try:
-            const.TS = data['TS'] 
+            const.TS = data['ts'] 
         except:
             pass
 
