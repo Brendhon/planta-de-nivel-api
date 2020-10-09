@@ -9,9 +9,11 @@ CORS(app)
 
 @app.route("/", methods=['POST'])
 def home():
-       
-    # Pegando os dados da Requisição 
-    data = request.get_json()
+    
+    try:
+        data = request.get_json() # Pegando os dados da Requisição 
+    except:
+        pass
 
     try:
         const.SP = data['SP']
